@@ -1,6 +1,7 @@
-
+import {StackNavigator} from "react-navigation"
 import React from 'react'
 import { StyleSheet,Image, Text, TextInput, View, Button } from 'react-native'
+import { StatusBar } from "expo-status-bar"
 
 export default class Login extends React.Component {
   state = { account: '', password: '', errorMessage: null }
@@ -16,6 +17,7 @@ export default class Login extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <StatusBar hidden />
         <Image style={styles.imageStyle}
              source={{uri: 'https://upload.wikimedia.org/wikipedia/vi/a/ad/LogoTLU.jpg'}}>
         </Image>
@@ -41,7 +43,7 @@ export default class Login extends React.Component {
           value={this.state.password}
         />
         <View style={{marginTop:20, width: 100}}>
-            <Button title="Login" style={styles.buttonStyle} onPress={this.handleLogin} />
+            <Button title="Login" style={styles.buttonStyle} onPress={() => this.props.navigation.navigate("Nav")} />
         </View>
       </View>
     )

@@ -1,55 +1,67 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
+import {
+  TouchableOpacity,
+  ActivityIndicator,
+  Alert,
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  StatusBar,
+  View,
+  Text,
+} from 'react-native';
 
-class Tables extends Component {
+class EducationProgram extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      educationProgram: [
-        {id:1,maMon:"AC201",tenMon:"Nguyên lý kế toán",soTinChi:3,hocPhanTienQuyet:null,soGio:30,heSo:1.7},
-        {id:2,maMon:"AC231A",tenMon:"Kế toán Mỹ 1",soTinChi:2,hocPhanTienQuyet:null,soGio:30,heSo:0.75},
-        {id:3,maMon:"AC231B",tenMon:"Kế toán Mỹ 2",soTinChi:2,hocPhanTienQuyet:null,soGio:45,heSo:1.7},
-        {id:4,maMon:"AD201",tenMon:"Kỹ năng giao tiếp và thuyết trình",soTinChi:2,hocPhanTienQuyet:null,soGio:45,heSo:1.2},
-        {id:5,maMon:"AD204",tenMon:"Ẩm thực Việt nam",soTinChi:4,hocPhanTienQuyet:null,soGio:54,heSo:1.2},
-    ],
+      educationProgram: [],
     }
+      
   }
 
+  componentDidMount() {
+    fetch("https://edu-ms.herokuapp.com/api/v1/mon-hoc")
+      .then(res => res.json())
+      .then(data => {
+          
+          this.setState({
+              educationProgram: data
+          })
+      })
+      .catch(error => console.log('An error occured ', error))
+  }
+
+  componentWillUnmount() {
+    this.setState({
+      educationProgram: []
+    })
+  }
   renderTableData() {
-    return this.state.educationProgram.map((education) => {
-      const {id, maMon, tenMon, soTinChi, hocPhanTienQuyet, soGio, heSo } = education
-      return (
-        <tr key={id}>
-          <td style={{textAlign:'center'}}>{id}</td>
-          <td style={{textAlign:'center'}}>{maMon}</td>
-          <td style={{textAlign:'center'}}>{tenMon}</td>
-          <td style={{textAlign:'center'}}>{soTinChi}</td>
-          <td style={{textAlign:'center'}}>{hocPhanTienQuyet}</td>
-          <td style={{textAlign:'center'}}>{soGio}</td>
-          <td style={{textAlign:'center'}}>{heSo}</td>
-        </tr>
-      )
+    return this.state.educationProgram.map((subject) => {
+     
+      if (typeof(subject) !== 'undefined') {
+        return <Text>{`${subject.maMon} - ${subject.tenMon} - ${subject.soTinChi} - ${subject.hocPhanTienQuyet} - ${subject.soGio} - ${subject.heSo}`}</Text>          
+      }
     })
   }
 
   renderTableHeader() {
-    const header = Object.keys(this.state.educationProgram[0])
+    const header = Object.keys(this.state.educationProgram[1])
     return header.map((key, index) => <th key={index}>{key.toUpperCase()}</th>)
   }
 
 
   render() {
+   
     return (
-        <section>
-            <h1 style={{textAlign:'center'}}>Chương trình đào tạo</h1>
-            <table>
-            <tbody>
-                <tr>{this.renderTableHeader()}</tr>
-                {this.renderTableData()}
-            </tbody>
-            </table>
-        </section> 
+      <ScrollView> 
+        <StatusBar hidden />
+        <Text style={{fontSize:27, marginBottom: 30, fontWeight:"bold", textAlign:"center"}}>Chương trình đào tạo</Text>
+        { this.renderTableData() }
+      </ScrollView>  
     )
   }
 }
 
-export default Tables
+export default EducationProgram

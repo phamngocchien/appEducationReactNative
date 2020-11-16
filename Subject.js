@@ -1,49 +1,69 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
+// import { createStackNavigator } from 'react-navigation';
+import Nav from "./Nav"
+import {
+  TouchableOpacity,
+  ActivityIndicator,
+  Alert,
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  StatusBar,
+  View,
+  Text,
+} from 'react-native';
 
-class Tables extends Component {
+class Subjects extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      subjecs: [
-        { id: 1, maMon: 'AC201', tenMon: "Nguyên lý kế toán", soTinChi: 3 },
-        { id: 2, maMon: 'AC231A', tenMon: "Kế toán Mỹ 1", soTinChi: 2 },
-        { id: 3, maMon: 'AC231B', tenMon: "Kế toán Mỹ 2", soTinChi: 2 },
-        { id: 4, maMon: 'AD201', tenMon: "Kỹ năng giao tiếp và thuyết trình", soTinChi: 4 },
-      ],
+      subjects: [],
     }
+      
   }
 
+  componentDidMount() {
+    fetch("https://edu-ms.herokuapp.com/api/v1/mon-hoc")
+      .then(res => res.json())
+      .then(data => {
+          
+          this.setState({
+              subjects: data
+          })
+      })
+      .catch(error => console.log('An error occured ', error))
+  }
+
+  componentWillUnmount() {
+    this.setState({
+      subjects: []
+    })
+  }
   renderTableData() {
-    return this.state.subjecs.map((subject, index) => {
-      const { id, maMon, tenMon, soTinChi } = subject
-      return (
-        <tr key={id}>
-          <td style={{textAlign:'center'}}>{id}</td>
-          <td style={{textAlign:'center'}}>{maMon}</td>
-          <td style={{textAlign:'center'}}>{tenMon}</td>
-          <td style={{textAlign:'center'}}>{soTinChi}</td>
-        </tr>
-      )
+    return this.state.subjects.map((subject) => {
+     
+      if (typeof(subject) !== 'undefined') {
+        return <Text>{`${subject.maMon} - ${subject.tenMon}`}</Text>          
+      }
     })
   }
 
   renderTableHeader() {
-    const header = Object.keys(this.state.subjecs[0])
+    const header = Object.keys(this.state.subjects[1])
     return header.map((key, index) => <th key={index}>{key.toUpperCase()}</th>)
   }
 
 
   render() {
+   
     return (
-        <table>
-          <tbody>
-
-            <tr>{this.renderTableHeader()}</tr>
-            {this.renderTableData()}
-          </tbody>
-        </table>
+      <ScrollView> 
+        <Text style={{fontSize:27, marginBottom: 30, fontWeight:"bold", textAlign:"center"}}>Danh sách môn học</Text>
+        <StatusBar hidden />
+        { this.renderTableData() }
+      </ScrollView>  
     )
   }
 }
 
-export default Tables
+export default Subjects
