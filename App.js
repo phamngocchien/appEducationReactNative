@@ -31,6 +31,7 @@ class App extends Component {
   }
 }
 
+
 const Stack = createStackNavigator();
 
 export default App
