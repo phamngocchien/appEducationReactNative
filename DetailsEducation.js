@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
-// import { createStackNavigator } from 'react-navigation';
-import Nav from "./Nav"
+import {useState } from "react";
+// import { Picker} from "react-native";
 import {
   TouchableOpacity,
   ActivityIndicator,
@@ -11,59 +11,52 @@ import {
   StatusBar,
   View,
   Text,
+  Picker
 } from 'react-native';
-
-class DetailsEducation extends Component {
-  constructor(props) {
-    super(props)
+import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+export default class DetailsEducation extends Component {
+    constructor(props) {
+    super(props);
     this.state = {
-      subjects: [],
+      HeadTable: ['STT', 'Mã học phần', 'Tên học phần', 'Số tín chỉ', 'Năm học' ],
+      DataTable: [
+        ['1', 'CF121', 'Cấu trúc dữ liệu', '3', '2019-2020'],
+        ['2', 'CF301','Ngôn ngữ hình thức', '3', '2019-2020'],
+        ['3', 'MI312','Đồ họa', '2', '2019-2020 '],
+        ['4', 'MA110','Giải tích', '3', '2019-2020']
+      ]
     }
-      
   }
-
-  componentDidMount() {
-    fetch("https://edu-ms.herokuapp.com/api/v1/mon-hoc")
-      .then(res => res.json())
-      .then(data => {
-          
-          this.setState({
-              subjects: data
-          })
-      })
-      .catch(error => console.log('An error occured ', error))
-  }
-
-  componentWillUnmount() {
-    this.setState({
-      subjects: []
-    })
-  }
-  renderTableData() {
-    return this.state.subjects.map((subject) => {
-     
-      if (typeof(subject) !== 'undefined') {
-        return <Text>{`${subject.maMon} - ${subject.tenMon}`}</Text>          
-      }
-    })
-  }
-
-  renderTableHeader() {
-    const header = Object.keys(this.state.subjects[1])
-    return header.map((key, index) => <th key={index}>{key.toUpperCase()}</th>)
-  }
-
-
   render() {
-   
-    return (
-      <ScrollView> 
-        <Text style={{fontSize:27, marginBottom: 30, fontWeight:"bold", textAlign:"center"}}>Danh sách môn học</Text>
-        <StatusBar hidden />
-        { this.renderTableData() }
-      </ScrollView>  
-    )
-  }
-}
+      const state = this.state;
+      // const [selectedValue, setSelectedValue] = useState("java");
+      return (      
+        <ScrollView style={styles.container}>
 
-export default DetailsEducation
+          <Text style={{fontSize:27, marginBottom: 30, fontWeight:"bold", textAlign:"center"}}>Danh sách giáo viên</Text>
+          <Table borderStyle={{borderWidth: 1, borderColor: 'black'}}>
+            <Row data={state.HeadTable} style={styles.HeadStyle} textStyle={styles.TableText}/>
+            <Rows data={state.DataTable} textStyle={styles.TableText}/>
+          </Table>
+        </ScrollView>
+      )
+    }
+};
+
+
+  const styles = StyleSheet.create({
+    container: { 
+      flex: 1,
+      padding: 18,
+      paddingTop: 35,
+
+    },
+    HeadStyle: { 
+      height: 50,
+      alignContent: "center",
+ 
+    },
+    TableText: { 
+      margin: 10
+    }
+  });

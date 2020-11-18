@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 // import { createStackNavigator } from 'react-navigation';
-import Nav from "./Nav"
 import {
   TouchableOpacity,
   ActivityIndicator,
@@ -11,12 +10,17 @@ import {
   StatusBar,
   View,
   Text,
+  ListItem,
+  Table,
+  Row,
+  Rows
 } from 'react-native';
 
 class Subjects extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      // tableHead: ["Mã môn", "tên môn"],
       subjects: [],
     }
       
@@ -57,10 +61,14 @@ class Subjects extends Component {
   render() {
    
     return (
-      <ScrollView> 
+      <ScrollView style={{paddingLeft:15}}> 
         <Text style={{fontSize:27, marginBottom: 30, fontWeight:"bold", textAlign:"center"}}>Danh sách môn học</Text>
         <StatusBar hidden />
         { this.renderTableData() }
+        {/* <Table borderStyle={{borderWidth: 2, borderColor: 'black'}}>
+          <Row data={this.state.tableHead} />
+          <Rows data={this.renderTableData()}/>
+        </Table> */}
       </ScrollView>  
     )
   }

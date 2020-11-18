@@ -55,7 +55,7 @@ class EducationProgram extends Component {
   render() {
    
     return (
-      <ScrollView> 
+      <ScrollView style={{paddingLeft:15}}> 
         <StatusBar hidden />
         <Text style={{fontSize:27, marginBottom: 30, fontWeight:"bold", textAlign:"center"}}>Chương trình đào tạo</Text>
         { this.renderTableData() }
