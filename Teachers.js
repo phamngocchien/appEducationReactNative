@@ -15,8 +15,13 @@ export default class Teachers extends Component {
     constructor(props) {
     super(props);
     this.state = {
-      HeadTable: ['STT', 'Họ và tên', 'Mã giáo viên', 'Bộ môn'],
-      DataTable: [
+      headTable: {
+        stt: 'STT',
+        fullname: 'Họ và tên',
+        studentCode: 'Mã giáo viên',
+        deparment: 'Bộ môn'
+      },
+      dataTable: [
         ['1', 'Nguyễn Thu Phương', 'CDL006', 'Tin học'],
         ['2', 'Nguyễn Thu Trang', 'CDL007', 'Toán'],
         ['3', 'Nguyễn Thu Chang', 'CDL008', 'Anh '],
@@ -27,13 +32,13 @@ export default class Teachers extends Component {
     }
   }
   render() {
-      const state = this.state;
+      const { headTable, dataTable } = this.state;
       return (
         <ScrollView style={styles.container}>
           <Text style={{fontSize:27, marginBottom: 30, fontWeight:"bold", textAlign:"center"}}>Danh sách giáo viên</Text>
           <Table borderStyle={{borderWidth: 1, borderColor: 'black'}}>
-            <Row data={state.HeadTable} style={styles.HeadStyle} textStyle={styles.TableText}/>
-            <Rows data={state.DataTable} textStyle={styles.TableText}/>
+            <Row data={ Object.values(headTable) } style={styles.HeadStyle} textStyle={styles.TableText}/>
+            <Rows data={dataTable} textStyle={styles.TableText}/>
           </Table>
         </ScrollView>
       )
@@ -41,19 +46,19 @@ export default class Teachers extends Component {
 };
 
 
-  const styles = StyleSheet.create({
-    container: { 
-      flex: 1,
-      padding: 18,
-      paddingTop: 35,
+const styles = StyleSheet.create({
+  container: { 
+    flex: 1,
+    padding: 18,
+    paddingTop: 35,
 
-    },
-    HeadStyle: { 
-      height: 50,
-      alignContent: "center",
- 
-    },
-    TableText: { 
-      margin: 10
-    }
-  });
+  },
+  HeadStyle: { 
+    height: 50,
+    alignContent: "center",
+
+  },
+  TableText: { 
+    margin: 10
+  }
+});

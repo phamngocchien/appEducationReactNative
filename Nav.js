@@ -1,9 +1,6 @@
 import React, { Component, Fragment } from 'react'
 // import { createStackNavigator } from 'react-navigation'
-import Subjects from "./Subject"
-import EducationProgram from "./EducationProgram"
-import Teachers from "./Teachers"
-import DetailsEducation from "./DetailsEducation"
+
 import {StackNavigator} from "react-navigation"
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -21,18 +18,7 @@ import {
   Button
 } from 'react-native';
 
-export default function App2() {
-  return (
-      <Stack.Navigator>
-          <Stack.Screen name="Nav" component={Nav} />
-          <Stack.Screen name="Subjects" component={Subjects} />
-          <Stack.Screen name="Teachers" component={Teachers} />
-          <Stack.Screen name="EducationProgram" component={EducationProgram} />
-          <Stack.Screen name="DetailsEducation" component={DetailsEducation} />
-      </Stack.Navigator>
-  );
-  }
-class Nav extends Component {
+export default class Nav extends Component {
   render() { 
     return (
       <View style={styles.container}>
@@ -64,4 +50,3 @@ const styles = StyleSheet.create({
   }
 })
 
-const Stack = createStackNavigator();

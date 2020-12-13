@@ -33,7 +33,7 @@ export default class DetailsEducation extends Component {
       return (      
         <ScrollView style={styles.container}>
 
-          <Text style={{fontSize:27, marginBottom: 30, fontWeight:"bold", textAlign:"center"}}>Danh sách giáo viên</Text>
+          <Text style={{fontSize:27, marginBottom: 30, fontWeight:"bold", textAlign:"center"}}>Danh sách </Text>
           <Table borderStyle={{borderWidth: 1, borderColor: 'black'}}>
             <Row data={state.HeadTable} style={styles.HeadStyle} textStyle={styles.TableText}/>
             <Rows data={state.DataTable} textStyle={styles.TableText}/>
